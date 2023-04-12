@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../../components/layout";
+import Textarea from "../../components/textarea";
 
 const Write = () => {
   return (
@@ -10,7 +11,7 @@ const Write = () => {
           <span className="m-1 font-semibold text-lg">DingDing</span>
         </div>
         <form>
-        <textarea className="mt-1 shadow-sm w-full my-5 h-[60vh] rounded-lg p-3 focus:outline-none resize-none" placeholder="write your message..."/>
+        <Textarea addClassName={"h-[60vh]"} placeholder="write your message..." required/>
         <button className="rounded-xl bg-gradient-to-r from-mygreen  to-myorange w-full mt-2 hover:scale-105">
           <span className="block text-white px-4 py-2 font-bold rounded-full w-full text-lg shadow-lg">
             SUBMIT

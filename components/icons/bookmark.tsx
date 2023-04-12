@@ -1,10 +1,10 @@
 import React from "react";
 import { IconProps } from "../../types/iconProps";
 
-export const BookMarkIcon = ({ className, strokeWidth }: IconProps) => {
+export const BookMarkIcon = ({ className, strokeWidth, fillColor }: IconProps) => {
   return (
     <svg
-      fill="none"
+      fill={fillColor}
       stroke="currentColor"
       stroke-width={strokeWidth}
       viewBox="0 0 24 24"

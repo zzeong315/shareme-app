@@ -22,7 +22,7 @@ const Answer = () => {
         </div>
         <div className="flex space-x-1">
           <span>
-            <HeartIcon className="w-5 h-5" strokeWidth="1.5" />
+            <HeartIcon className="w-5 h-5" strokeWidth="1.5" fillColor="none"/>
           </span>
           <span>2</span>
         </div>

@@ -1,6 +1,8 @@
-import React from 'react'
-import Layout from '../../components/layout';
-import Tweet from '../../components/tweet';
+import Link from "next/link";
+import React from "react";
+import FloationgButton from "../../components/floating-button";
+import Layout from "../../components/layout";
+import Tweet from "../../components/tweet";
 
 const Bookmarks = () => {
   return (
@@ -11,12 +13,17 @@ const Bookmarks = () => {
         </h1>
         <div>
           {[1, 2, 3, 4, 5].map((_, i) => (
-            <Tweet key={i} />
+            <Link href={`/tweet/${i}`}>
+              <a>
+                <Tweet key={i} />
+              </a>
+            </Link>
           ))}
         </div>
       </div>
+      <FloationgButton />
     </Layout>
-  )
-}
+  );
+};
 
 export default Bookmarks;

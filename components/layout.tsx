@@ -64,7 +64,7 @@ export default function Layout({
                   : "hover:text-gray-500 transition-colors"
               )}
             >
-              <HeartIcon className="w-8 h-8" strokeWidth="2"/>
+              <HeartIcon className="w-8 h-8" strokeWidth="2" fillColor="none"/>
             </a>
           </Link>
           <Link href="/profile/bookmarks">
@@ -76,7 +76,7 @@ export default function Layout({
                   : "hover:text-gray-500 transition-colors"
               )}
             >
-              <BookMarkIcon className="w-8 h-8" strokeWidth="2" />
+              <BookMarkIcon className="w-8 h-8" strokeWidth="2" fillColor="none"/>
             </a>
           </Link>
           <Link href="/profile">
