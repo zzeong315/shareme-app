@@ -1,10 +1,29 @@
+import { Post, User } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
+import useSWR from "swr";
 import FloationgButton from "../../components/floating-button";
 import Layout from "../../components/layout";
 import Tweet from "../../components/tweet";
 
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    answers: number;
+    bookmarks: number;
+    Fav: number;
+  };
+  // answers: AnswerWithUser[];
+}
+
+interface FavResponse {
+  ok: boolean;
+  favs: [Post: PostWithUser];
+}
+
 const Likes = () => {
+  const { data } = useSWR<FavResponse>("/api/user/me/favs");
+
   return (
     <Layout hasTabBar>
       <div className="flex flex-col w-full">
@@ -12,10 +31,18 @@ const Likes = () => {
           My Likes
         </h1>
         <div>
-          {[1, 2, 3, 4, 5].map((_, i) => (
-            <Link href={`/tweet/${i}`}>
+          {data?.favs?.map((post: any) => (
+            <Link href={`/tweet/${post.Post.id}`} key={post.Post.id}>
               <a>
-                <Tweet key={i} />
+                <Tweet
+                  content={post.Post.content}
+                  time={post.Post.createdAt.toString()}
+                  id={post.Post.id}
+                  avatar={post.Post.user.avatar}
+                  name={post.Post.user.name}
+                  favs={post.Post._count.Fav}
+                  answers={post.Post._count.answers}
+                />
               </a>
             </Link>
           ))}

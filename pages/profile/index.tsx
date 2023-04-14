@@ -1,17 +1,39 @@
+import { Post, User } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
+import useSWR from "swr";
+import AvatarCompo from "../../components/avatar";
 import { BookMarkIcon } from "../../components/icons/bookmark";
 import { HeartIcon } from "../../components/icons/heart";
 import Layout from "../../components/layout";
 import Tweet from "../../components/tweet";
+import useUser from "../../lib/useUser";
+
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    bookmarks: number;
+    Fav: number;
+  };
+}
+
+interface PostResponse {
+  ok: boolean;
+  posts: PostWithUser[];
+  // hasBookmark: boolean;
+  // hasFav: boolean;
+}
 
 const Profile = () => {
+  const user = useUser();
+  const { data } = useSWR<PostResponse>("/api/user/me/shares");
+  console.log(data);
   return (
     <Layout hasTabBar>
       <div className="flex flex-col pt-8 pb-4 px-4">
         <div className="flex items-center mb-6">
-          <div className="bg-gradient-to-br from-myyellow to-myemerald rounded-full w-10 h-10 mb-1 mr-1"></div>
-          <span className="m-1 font-semibold text-2xl">DingDing</span>
+          <AvatarCompo avatar={user?.user?.avatar!} addClassName={"w-10 h-10 mb-1 mr-1"} />
+          <span className="m-1 font-semibold text-2xl">{user?.user?.name}</span>
           <Link href={"/profile/edit"}>
             <button className="bg-myyellow px-2 py-1 rounded-lg text-white font-semibold text-base ml-2 hover:scale-95">
               EDIT
@@ -52,10 +74,18 @@ const Profile = () => {
           My Shares
         </h1>
         <div>
-          {[1, 2, 3, 4, 5].map((_, i) => (
-            <Link href={`/tweet/${i}`}>
+        {data?.posts?.map((post: any) => (
+            <Link href={`/tweet/${post.id}`} key={post.id}>
               <a>
-                <Tweet key={i} />
+                <Tweet
+                  content={post.content}
+                  time={post.createdAt.toString()}
+                  id={post.id}
+                  avatar={post.user.avatar}
+                  name={post.user.name}
+                  favs={post._count.Fav}
+                  answers={post._count.answers}
+                />
               </a>
             </Link>
           ))}

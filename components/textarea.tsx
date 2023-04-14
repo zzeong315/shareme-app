@@ -9,13 +9,14 @@ interface TextareaProps {
   [key: string]: any;
 }
 
-const Textarea = ({placeholder, required, addClassName}:TextareaProps) => {
+const Textarea = ({placeholder, required, addClassName, register}:TextareaProps) => {
   return (
     <div className="w-full">
       <textarea
         className={`mt-1 shadow-sm w-full my-5 rounded-lg p-3 focus:outline-none resize-none ${addClassName}`}
         placeholder={placeholder}
         required={required}
+        {...register}
       />
     </div>
   );

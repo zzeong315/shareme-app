@@ -11,13 +11,14 @@ interface InputProps {
   [key: string]: any;
 }
 
-const Input = ({label, name, type, placeholder, required}: InputProps) => {
+const Input = ({label, name, type, placeholder, required, register}: InputProps) => {
   return (
     <div className="p-1 rounded-2xl w-full bg-gradient-to-r from-myyellow via-mypink to-mygreen">
       <label htmlFor={name} className="sr-only">
         {label}
       </label>
       <input
+        {...register}
         className="p-3 w-full rounded-xl focus:outline-none"
         type={type}
         id={name}
