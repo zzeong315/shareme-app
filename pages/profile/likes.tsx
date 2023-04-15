@@ -1,6 +1,6 @@
 import { Post, User } from "@prisma/client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import FloationgButton from "../../components/floating-button";
 import Layout from "../../components/layout";
@@ -24,8 +24,12 @@ export interface FavResponse {
 
 const Likes = () => {
   const user = useUser();
-  const { data } = useSWR<FavResponse>("/api/user/me/favs");
-
+  const { data, error } = useSWR<FavResponse>("/api/user/me/favs");
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar>
       <div className="flex flex-col w-full">

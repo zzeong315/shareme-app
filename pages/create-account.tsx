@@ -38,7 +38,11 @@ const CreateAccount = () => {
       router.push(`/log-in`);
     }
   }, [data, router]);
-  
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <div className="flex flex-col items-center w-full h-[100vh] py-10 px-5 bg-white">
       <div className="mb-14">
@@ -134,7 +138,7 @@ const CreateAccount = () => {
         </div>
 
         <Button
-          text={"회원가입"}
+          text={loading ? "로딩 중" : "회원가입"}
           addClassName={"from-myemerald to-myblue mt-8"}
         />
       </form>

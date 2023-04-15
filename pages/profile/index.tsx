@@ -1,6 +1,6 @@
 import { Post, User } from "@prisma/client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import AvatarCompo from "../../components/avatar";
 import { BookMarkIcon } from "../../components/icons/bookmark";
@@ -27,9 +27,14 @@ interface PostResponse {
 
 const Profile = () => {
   const user = useUser();
-  const { data } = useSWR<PostResponse>("/api/user/me/shares");
+  const { data, error } = useSWR<PostResponse>("/api/user/me/shares");
   const { data : favData } = useSWR<FavResponse>("/api/user/me/favs");
   const { data : bookmarkData } = useSWR<BookmarkResponse>("/api/user/me/bookmarks");
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar>
       <div className="flex flex-col pt-8 pb-4 px-4">

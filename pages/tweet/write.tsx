@@ -21,7 +21,7 @@ const Write = () => {
   const router = useRouter();
   const user = useUser();
   const { register, handleSubmit, formState:{errors}, reset } = useForm<WriteForm>();
-  const [post, {loading, data}] = useMutation<WriteRosponse>("/api/posts");
+  const [post, {loading, data, error}] = useMutation<WriteRosponse>("/api/posts");
   const onValid = (data: WriteForm) => {
     post(data);
     reset();
@@ -32,6 +32,11 @@ const Write = () => {
       router.push(`/tweet/${data.post.id}`)
     }
   },[data, router]);
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar canGoBack>
       <div className="p-4 pt-6">
@@ -52,7 +57,7 @@ const Write = () => {
             })}
           />
             <p className="text-red-400 mt-1 mr-2 text-right text-sm">{errors?.content?.message}</p>
-            <Button text={"공유하기"} addClassName={"from-mygreen to-myorange mt-2"}/>          
+            <Button text={loading ? "로딩 중" : "공유하기"} addClassName={"from-mygreen to-myorange mt-2"}/>          
         </form>
       </div>
     </Layout>

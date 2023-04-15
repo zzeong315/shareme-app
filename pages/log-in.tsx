@@ -15,7 +15,7 @@ interface LoginForm {
 
 const Login = () => {
   const router = useRouter();
-  const [login, { loading, data }] = useMutation("/api/user/confirm");
+  const [login, { loading, data, error }] = useMutation("/api/user/confirm");
   const {
     register,
     handleSubmit,
@@ -35,7 +35,11 @@ const Login = () => {
       setError('loginError', { message: '회원정보를 확인해주세요.' });
     }
   }, [data, router]);
-  // console.log(loading, data);
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <div className="flex flex-col items-center w-full h-[100vh] py-10 px-5 bg-white">
       <div className="mb-14">
@@ -84,7 +88,7 @@ const Login = () => {
               {errors?.loginError?.message}
             </p>
         </div>
-        <Button text={"로그인"} addClassName={"from-mypink to-myyellow mt-8"} />
+        <Button text={loading ? "로딩 중" : "로그인"} addClassName={"from-mypink to-myyellow mt-8"} />
       </form>
       <Link href={"/create-account"}>
         <a className="w-full">

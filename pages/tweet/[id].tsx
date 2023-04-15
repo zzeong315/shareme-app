@@ -46,12 +46,12 @@ interface AnswerResponse {
 
 const TweetDetail = () => {
   const router = useRouter();
-  const { data, mutate } = useSWR<CommunityPostResponse>(
+  const { data, mutate, error } = useSWR<CommunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
   const [fav] = useMutation(`/api/posts/${router.query.id}/fav`);
   const [bookmark] = useMutation(`/api/posts/${router.query.id}/bookmark`);
-  const [sendAnswer, { data: answerData, loading: answerLoading }] =
+  const [sendAnswer, { data: answerData, loading: answerLoading, error: answerError }] =
   useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answer`);
   // console.log(data);
   const {
@@ -110,6 +110,11 @@ const TweetDetail = () => {
       mutate();
     }
   }, [answerData, reset, mutate]);
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error, answerError]);
   return (
     <Layout hasTabBar canGoBack>
       <div>
@@ -169,7 +174,7 @@ const TweetDetail = () => {
         <p className="text-red-400 mt-1 mr-2 text-right text-sm">
           {errors?.answer?.message}
         </p>
-        <Button text={"댓글 달기"} addClassName={"from-myyellow to-mygreen"} />
+        <Button text={answerLoading ? "로딩 중" : "댓글 달기"} addClassName={"from-myyellow to-mygreen"} />
       </form>
     </Layout>
   );

@@ -1,6 +1,6 @@
 import { Bookmark, Post, User } from "@prisma/client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import FloationgButton from "../components/floating-button";
 import Layout from "../components/layout";
@@ -26,8 +26,12 @@ interface PostsResponse {
 
 const Home = () => {
   const user = useUser();
-  const { data } = useSWR<PostsResponse>("/api/posts");
-  
+  const { data, error } = useSWR<PostsResponse>("/api/posts");
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar>
       <div>

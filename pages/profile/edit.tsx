@@ -23,7 +23,7 @@ interface EditProfileResponse {
 const Edit = () => {
   const router = useRouter();
   const user = useUser();
-  const [editProfile, {data, loading}] = useMutation<EditProfileResponse>(`/api/user/me`);
+  const [editProfile, {data, loading, error}] = useMutation<EditProfileResponse>(`/api/user/me`);
   const {
     register,
     handleSubmit,
@@ -45,6 +45,11 @@ const Edit = () => {
       router.push('/profile');
     }
   },[data, router]);
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar>
       <h1 className="mt-8 text-darkgray font-semibold text-2xl text-center">

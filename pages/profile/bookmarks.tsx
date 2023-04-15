@@ -1,6 +1,6 @@
 import { Post, User } from "@prisma/client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import FloationgButton from "../../components/floating-button";
 import Layout from "../../components/layout";
@@ -24,7 +24,12 @@ export interface BookmarkResponse {
 
 const Bookmarks = () => {
   const user = useUser();
-  const { data } = useSWR<BookmarkResponse>("/api/user/me/bookmarks");
+  const { data, error } = useSWR<BookmarkResponse>("/api/user/me/bookmarks");
+  useEffect(() => {
+    if(error) {
+      alert("에러가 발생하였습니다. 다시 시도하여 주세요.")
+    };
+  }, [error]);
   return (
     <Layout hasTabBar>
       <div className="flex flex-col w-full">
