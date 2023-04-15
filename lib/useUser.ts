@@ -3,9 +3,17 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
 
+interface CountWithUser extends User {
+  user: User;
+  _count: {
+    bookmarks: number;
+    Fav: number;
+  };
+}
+
 interface ProfileResponse {
   ok: boolean;
-  profile: User;
+  profile: CountWithUser;
 }
 
 export default function useUser() {

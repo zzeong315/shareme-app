@@ -13,10 +13,11 @@ interface TweetProps {
   name: string;
   favs: number;
   answers: number;
-  // bookmarks: number;
+  hasFav: boolean;
+  hasBookmark: boolean;
 }
 
-const Tweet = ({content, time, name, favs, answers, avatar} : TweetProps) => {
+const Tweet = ({content, time, name, favs, answers, avatar, hasFav, hasBookmark} : TweetProps) => {
   return (
     <div className="flex flex-col p-4 border-lightgray border-b">
       <div className="flex justify-between">
@@ -34,11 +35,11 @@ const Tweet = ({content, time, name, favs, answers, avatar} : TweetProps) => {
             <span>{answers}</span>
           </div>
           <div className="flex space-x-1">
-            <span><HeartIcon className="w-5 h-5" strokeWidth="1.5" fillColor="none"/></span>
+            <span><HeartIcon className="w-5 h-5" strokeWidth="1.5" fillColor={hasFav ? "pink" : "none"}/></span>
             <span>{favs}</span>
           </div>
         </div>
-        <div><BookMarkIcon className="w-5 h-5" strokeWidth="1.5" fillColor="none"/></div>
+        <div><BookMarkIcon className="w-5 h-5" strokeWidth="1.5" fillColor={hasBookmark ? "skyblue" :"none"}/></div>
       </div>
     </div>
   );

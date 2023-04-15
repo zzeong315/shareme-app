@@ -24,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   });
-  // console.log(token);
+  
   return res.json({
     ok: true,
   });

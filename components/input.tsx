@@ -6,12 +6,13 @@ interface InputProps {
   name: string;
   type: string;
   placeholder: string;
-  register?: UseFormRegisterReturn;
+  register: UseFormRegisterReturn;
   required: boolean;
+  disabled?: boolean
   [key: string]: any;
 }
 
-const Input = ({label, name, type, placeholder, required, register}: InputProps) => {
+const Input = ({label, name, type, placeholder, required, register, disabled=false }: InputProps) => {
   return (
     <div className="p-1 rounded-2xl w-full bg-gradient-to-r from-myyellow via-mypink to-mygreen">
       <label htmlFor={name} className="sr-only">
@@ -24,6 +25,7 @@ const Input = ({label, name, type, placeholder, required, register}: InputProps)
         id={name}
         placeholder={placeholder}
         required={required}
+        disabled={disabled}
       />
     </div>
   );

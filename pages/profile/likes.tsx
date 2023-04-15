@@ -5,23 +5,25 @@ import useSWR from "swr";
 import FloationgButton from "../../components/floating-button";
 import Layout from "../../components/layout";
 import Tweet from "../../components/tweet";
+import getUserCheck from "../../lib/useGetCheck";
+import useUser from "../../lib/useUser";
 
-interface PostWithUser extends Post {
+export interface PostWithUser extends Post {
   user: User;
   _count: {
     answers: number;
     bookmarks: number;
     Fav: number;
   };
-  // answers: AnswerWithUser[];
 }
 
-interface FavResponse {
+export interface FavResponse {
   ok: boolean;
   favs: [Post: PostWithUser];
 }
 
 const Likes = () => {
+  const user = useUser();
   const { data } = useSWR<FavResponse>("/api/user/me/favs");
 
   return (
@@ -42,6 +44,8 @@ const Likes = () => {
                   name={post.Post.user.name}
                   favs={post.Post._count.Fav}
                   answers={post.Post._count.answers}
+                  hasFav={post.userId === user?.user?.id!}
+                  hasBookmark={getUserCheck(post?.Post?.bookmarks, user?.user?.id!)}
                 />
               </a>
             </Link>

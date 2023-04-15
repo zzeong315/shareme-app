@@ -2,6 +2,7 @@ import { Post } from "@prisma/client";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import AvatarCompo from "../../components/avatar";
 import Button from "../../components/button";
 import Layout from "../../components/layout";
 import Textarea from "../../components/textarea";
@@ -35,7 +36,7 @@ const Write = () => {
     <Layout hasTabBar canGoBack>
       <div className="p-4 pt-6">
         <div className="flex items-center">
-          <div className="bg-rose-300 rounded-full w-6 h-6 mb-1 mr-1"></div>
+          <AvatarCompo avatar={user?.user?.avatar!} addClassName={"w-6 h-6 mb-1 mr-1"}/>
           <span className="m-1 font-semibold text-lg">{user?.user?.name}</span>
         </div>
         <form onSubmit={handleSubmit(onValid)}>

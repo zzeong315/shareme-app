@@ -3,10 +3,7 @@ import db from "../../../../lib/db";
 import withHandler from "../../../../lib/withHandler";
 import { withApiSession } from "../../../../lib/withSession";
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     session: { user },
   } = req;
@@ -17,14 +14,23 @@ async function handler(
     include: {
       Post: {
         include: {
-          user:true,
-          _count:true,
+          user: {
+            select: {
+              name: true,
+              id: true,
+              avatar: true,
+            },
+          },
+          bookmarks: {
+            select: {
+              userId: true,
+            }
+          },
+          _count: true,
         },
       },
     },
   });
-  // console.log("------favs------")
-  // console.log(favs);
   res.json({
     ok: true,
     favs,

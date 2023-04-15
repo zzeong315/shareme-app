@@ -17,13 +17,23 @@ async function handler(
     include: {
       post: {
         include: {
-          user: true,
+          user: {
+            select:{
+              name: true,
+              id: true,
+              avatar: true,
+            },
+          },
+          Fav: {
+            select: {
+              userId:true,
+            },
+          },
           _count: true,
         },
       },
     },
   });
-  // console.log(bookmarks);
   res.json({
     ok: true,
     bookmarks,

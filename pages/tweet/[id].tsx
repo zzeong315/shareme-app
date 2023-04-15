@@ -53,7 +53,7 @@ const TweetDetail = () => {
   const [bookmark] = useMutation(`/api/posts/${router.query.id}/bookmark`);
   const [sendAnswer, { data: answerData, loading: answerLoading }] =
   useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answer`);
-  console.log(data);
+  // console.log(data);
   const {
     register,
     handleSubmit,

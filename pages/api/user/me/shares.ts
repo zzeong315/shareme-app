@@ -15,12 +15,27 @@ async function handler(
       userId: user?.id,
     },
     include: {
-      user: true,
+      user: {
+        select:{
+          name: true,
+          id: true,
+          avatar: true,
+        }
+      },
       _count: true,
+      Fav: {
+        select: {
+          userId: true,
+        }
+      },
+      bookmarks: {
+        select: {
+          userId: true,
+        }
+      },
     }
   });
 
-  // console.log(posts);
   res.json({
     ok: true,
     posts,

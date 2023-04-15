@@ -1,5 +1,6 @@
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AvatarRadio from "../components/avatarRadio";
 import Button from "../components/button";
@@ -19,6 +20,7 @@ interface MutationResult {
 }
 
 const CreateAccount = () => {
+  const router = useRouter();
   const [enter, { loading, data, error }] = useMutation<MutationResult>("/api/user/enter");
   const {
     register,
@@ -31,7 +33,12 @@ const CreateAccount = () => {
     enter(data);
     reset();
   };
-  console.log(loading, data, error)
+  useEffect(() => {
+    if (data?.ok) {
+      router.push(`/log-in`);
+    }
+  }, [data, router]);
+  
   return (
     <div className="flex flex-col items-center w-full h-[100vh] py-10 px-5 bg-white">
       <div className="mb-14">

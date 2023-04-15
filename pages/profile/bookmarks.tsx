@@ -5,8 +5,10 @@ import useSWR from "swr";
 import FloationgButton from "../../components/floating-button";
 import Layout from "../../components/layout";
 import Tweet from "../../components/tweet";
+import getUserCheck from "../../lib/useGetCheck";
+import useUser from "../../lib/useUser";
 
-interface PostWithUser extends Post {
+export interface PostWithUser extends Post {
   user: User;
   _count: {
     answers: number;
@@ -15,14 +17,14 @@ interface PostWithUser extends Post {
   };
 }
 
-interface BookmarkResponse {
+export interface BookmarkResponse {
   ok: boolean;
   bookmarks: [Post: PostWithUser];
 }
 
 const Bookmarks = () => {
+  const user = useUser();
   const { data } = useSWR<BookmarkResponse>("/api/user/me/bookmarks");
-  console.log(data);
   return (
     <Layout hasTabBar>
       <div className="flex flex-col w-full">
@@ -41,6 +43,8 @@ const Bookmarks = () => {
                   name={post.post.user.name}
                   favs={post.post._count.Fav}
                   answers={post.post._count.answers}
+                  hasFav={getUserCheck(post?.post?.Fav, user?.user?.id!)}
+                  hasBookmark={post.userId === user?.user?.id!}
                 />
               </a>
             </Link>

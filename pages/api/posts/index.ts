@@ -3,10 +3,7 @@ import db from "../../../lib/db";
 import withHandler from "../../../lib/withHandler";
 import { withApiSession } from "../../../lib/withSession";
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const {
       body: { content },
@@ -37,15 +34,26 @@ async function handler(
             avatar: true,
           },
         },
+        Fav: {
+          select: {
+            userId: true,
+          }
+        },
+        bookmarks: {
+          select: {
+            userId: true,
+          },
+        },
         _count: {
           select: {
             bookmarks: true,
-            answers:true,
+            answers: true,
             Fav: true,
           },
         },
       },
     });
+
     res.json({
       ok: true,
       posts,
@@ -53,4 +61,6 @@ async function handler(
   }
 }
 
-export default withApiSession(withHandler({ methods: ["GET", "POST"], handler }));
+export default withApiSession(
+  withHandler({ methods: ["GET", "POST"], handler })
+);

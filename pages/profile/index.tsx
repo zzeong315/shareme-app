@@ -7,7 +7,10 @@ import { BookMarkIcon } from "../../components/icons/bookmark";
 import { HeartIcon } from "../../components/icons/heart";
 import Layout from "../../components/layout";
 import Tweet from "../../components/tweet";
+import getUserCheck from "../../lib/useGetCheck";
 import useUser from "../../lib/useUser";
+import { BookmarkResponse } from "./bookmarks";
+import { FavResponse } from "./likes";
 
 interface PostWithUser extends Post {
   user: User;
@@ -20,14 +23,13 @@ interface PostWithUser extends Post {
 interface PostResponse {
   ok: boolean;
   posts: PostWithUser[];
-  // hasBookmark: boolean;
-  // hasFav: boolean;
 }
 
 const Profile = () => {
   const user = useUser();
   const { data } = useSWR<PostResponse>("/api/user/me/shares");
-  console.log(data);
+  const { data : favData } = useSWR<FavResponse>("/api/user/me/favs");
+  const { data : bookmarkData } = useSWR<BookmarkResponse>("/api/user/me/bookmarks");
   return (
     <Layout hasTabBar>
       <div className="flex flex-col pt-8 pb-4 px-4">
@@ -51,7 +53,7 @@ const Profile = () => {
                     fillColor="white"
                   />
                 </span>
-                <span className="text-lg">1</span>
+                <span className="text-lg">{(favData?.favs)?.length}</span>
               </div>
             </Link>
             <Link href={"/profile/bookmarks"}>
@@ -63,7 +65,7 @@ const Profile = () => {
                     fillColor="white"
                   />
                 </span>
-                <span className="text-lg">2</span>
+                <span className="text-lg">{(bookmarkData?.bookmarks)?.length}</span>
               </div>
             </Link>
           </div>
@@ -76,7 +78,7 @@ const Profile = () => {
         <div>
         {data?.posts?.map((post: any) => (
             <Link href={`/tweet/${post.id}`} key={post.id}>
-              <a>
+              <a onClick={() => console.log(post)}>
                 <Tweet
                   content={post.content}
                   time={post.createdAt.toString()}
@@ -85,6 +87,8 @@ const Profile = () => {
                   name={post.user.name}
                   favs={post._count.Fav}
                   answers={post._count.answers}
+                  hasFav={getUserCheck(post.Fav, user?.user?.id!)}
+                  hasBookmark={getUserCheck(post.bookmarks, user?.user?.id!)}
                 />
               </a>
             </Link>
