@@ -125,7 +125,7 @@ const TweetDetail = () => {
               {data?.post?.user?.name}
             </span>
           </div>
-          <div className="my-3 text-base">{data?.post?.content}</div>
+          <div className="my-3 text-base whitespace-pre-line">{data?.post?.content}</div>
           <div className="text-sm">{timeChanger(data?.post?.createdAt.toString()!, "allDate")}</div>
         </div>
         <div className="flex justify-between border-lightgray border-b py-[5px] px-4">

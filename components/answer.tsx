@@ -16,7 +16,7 @@ const AnswerCompo = ({answer, name, avatar} : AnswerProps) => {
           <span className="m-1 font-medium text-[16px]">{name}</span>
         </div>
       </div>
-      <div className="my-2 text-[16px]">{answer}</div>
+      <div className="my-2 text-[16px] whitespace-pre-line">{answer}</div>
     </div>
   );
 };

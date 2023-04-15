@@ -27,7 +27,7 @@ const Tweet = ({content, time, name, favs, answers, avatar, hasFav, hasBookmark}
         </div>
         <div className="text-sm">{timeChanger(time, "timeOnly")}</div>
       </div>
-      <div className="my-3">{content}</div>
+      <div className="my-3 whitespace-pre-line">{content}</div>
       <div className="flex justify-between">
         <div className="flex space-x-3">
           <div className="flex space-x-1">

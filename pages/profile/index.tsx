@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import useSWR from "swr";
 import AvatarCompo from "../../components/avatar";
+import FloationgButton from "../../components/floating-button";
 import { BookMarkIcon } from "../../components/icons/bookmark";
 import { HeartIcon } from "../../components/icons/heart";
 import Layout from "../../components/layout";
@@ -100,6 +101,7 @@ const Profile = () => {
           ))}
         </div>
       </div>
+      <FloationgButton />
     </Layout>
   );
 };
