@@ -29,7 +29,7 @@ const Login = () => {
   }
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/`);
+      router.replace(`/`);
     } 
     if (data?.ok === false) {
       setError('loginError', { message: '회원정보를 확인해주세요.' });
