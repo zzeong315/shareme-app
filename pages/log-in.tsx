@@ -45,7 +45,7 @@ const Login = () => {
       <div className="mb-14">
         <LogoIcon width="100" height="80" />
       </div>
-      <h1 className="mb-8 text-darkgray font-semibold text-3xl">LOGIN</h1>
+      <h1 className="mb-8 text-darkgray font-semibold text-3xl">로그인</h1>
       <form onSubmit={handleSubmit(onValid)} className="w-full">
         <div className="w-full space-y-4">
           <div>
